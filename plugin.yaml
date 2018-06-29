@@ -32,7 +32,7 @@ node_types:
         interfaces:
             cloudify.interfaces.lifecycle:
                 create:
-                    implementation: hpc.hpc_plugin.tasks.prepare_sregistry
+                    implementation: sregistry_param.py
 
     hpc.nodes.Compute:
         derived_from: cloudify.nodes.Compute
