@@ -17,6 +17,35 @@ workflows:
         mapping: hpc.hpc_plugin.workflows.run_jobs
 
 node_types:
+    sregistry.nodes.Compute:
+        derived_from: cloudify.nodes.Compute
+        properties:
+            config:
+                description: secret, timezone and client
+            simulate:
+                description: Set to true to simulate job without sending it
+                type: boolean
+                default: False
+            agent_config:
+                default:
+                    install_method: none
+        interfaces:
+            cloudify.interfaces.lifecycle:
+                start:
+                    implementation: hpc.hpc_plugin.tasks.prepare_sregistry
+                    inputs:
+                        config:
+                            default: { get_property: [SELF, config] }
+                        simulate:
+                            default: { get_property: [SELF, simulate] }
+                stop:
+                    implementation: hpc.hpc_plugin.tasks.cleanup_sregistry
+                    inputs:
+                        config:
+                            default: { get_property: [SELF, config] }
+                        simulate:
+                            default: { get_property: [SELF, simulate] }
+
     hpc.nodes.Compute:
         derived_from: cloudify.nodes.Compute
         properties:

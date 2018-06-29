@@ -57,6 +57,48 @@ def preconfigure_job(config,
 
 
 @operation
+def prepare_sregistry(config,
+                simulate,
+                **kwargs):  # pylint: disable=W0613
+    """ Tries to connect to a sregistry node """
+    ctx.logger.info('Connecting to sregistry node..')
+    if not simulate:
+        wm_type = config['client']
+        wm = SregistryClient.factory(wm_type)
+        if not wm:
+            raise NonRecoverableError(
+                "Sregistry client '" +
+                wm_type +
+                "' not supported.")
+
+
+@operation
+def cleanup_singularity(config, skip, simulate, **kwargs):  # pylint: disable=W0613
+    """ Tries to connect to a login node """
+    if skip:
+        return
+
+    ctx.logger.info('Sregistry Cleaning up...')
+    # if not simulate:
+    #     workdir = ctx.instance.runtime_properties['workdir']
+    #     wm_type = config['workload_manager']
+    #     wm = WorkloadManager.factory(wm_type)
+    #     if not wm:
+    #         raise NonRecoverableError(
+    #             "Workload Manager '" +
+    #             wm_type +
+    #             "' not supported.")
+    #     client = SshClient(config['credentials'])
+    #     _, exit_code = client.execute_shell_command(
+    #         'rm -r ' + workdir,
+    #         wait_result=True)
+    #     client.close_connection()
+    #     ctx.logger.info('..all clean.')
+    # else:
+    #     ctx.logger.warning('HPC clean up simulated.')
+
+
+@operation
 def prepare_hpc(config,
                 base_dir,
                 workdir_prefix,
