@@ -20,8 +20,14 @@ node_types:
     sregistry.nodes.Compute:
         derived_from: cloudify.nodes.Compute
         properties:
-            config:
-                description: secret, timezone and client
+            host:
+                description: FQDN hostname or host ip
+            client:
+                description: type of the client (registry,...)
+            secret:
+                description: secret API Token
+            storage:
+                description: default storage directory path on hpc ressources
             simulate:
                 description: Set to true to simulate job without sending it
                 type: boolean
@@ -34,14 +40,27 @@ node_types:
                 start:
                     implementation: hpc.hpc_plugin.tasks.prepare_sregistry
                     inputs:
-                        config:
-                            default: { get_property: [SELF, config] }
+                        host:
+                            default: { get_property: [SELF, host] }
+                        client:
+                            default: { get_property: [SELF, client] }
+                        secret:
+                            default: { get_property: [SELF, secret] }
+                        storage:
+                            default: { get_property: [SELF, storage] }
                         simulate:
                             default: { get_property: [SELF, simulate] }
                 stop:
                     implementation: hpc.hpc_plugin.tasks.cleanup_sregistry
                     inputs:
-                        config:
+                        host:
+                            default: { get_property: [SELF, host] }
+                        client:
+                            default: { get_property: [SELF, client] }
+                        secret:
+                            default: { get_property: [SELF, secret] }
+                        storage:
+                            default: { get_property: [SELF, storage] }
                             default: { get_property: [SELF, config] }
                         simulate:
                             default: { get_property: [SELF, simulate] }
