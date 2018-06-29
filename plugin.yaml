@@ -22,10 +22,6 @@ node_types:
         properties:
             config:
                 description: get host, client, secret and storage
-            skip_cleanup:
-                description: True to not clean all files at deployment removal
-                type: boolean
-                default: False
             simulate:
                 description: Set to true to simulate job without sending it
                 type: boolean
@@ -36,23 +32,17 @@ node_types:
         interfaces:
             cloudify.interfaces.lifecycle:
                 start:
-                    implementation: hpc.hpc_plugin.tasks.prepare_hpc
+                    implementation: hpc.hpc_plugin.tasks.prepare_sregistry
                     inputs:
                         config:
                             default: { get_property: [SELF, config] }
-                        base_dir:
-                            default: ""
-                        workdir_prefix:
-                            default: ""
                         simulate:
                             default: { get_property: [SELF, simulate] }
                 stop:
-                    implementation: hpc.hpc_plugin.tasks.cleanup_hpc
+                    implementation: hpc.hpc_plugin.tasks.cleanup_sregistry
                     inputs:
                         config:
                             default: { get_property: [SELF, config] }
-                        skip:
-                            default: { get_property: [SELF, skip_cleanup] }
                         simulate:
                             default: { get_property: [SELF, simulate] }
 

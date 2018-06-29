@@ -57,6 +57,21 @@ def preconfigure_job(config,
 
 
 @operation
+def prepare_sregistry(config,
+                simulate,
+                **kwargs):  # pylint: disable=W0613
+    """ Tries to check sregistry service"""
+    ctx.logger.info('checking sregistry service..')
+    
+@operation
+def cleanup_sregistry(config, simulate, **kwargs):  # pylint: disable=W0613
+    """ Tries to connect to a login node """
+    if skip:
+        return
+
+    ctx.logger.info('cleaning sregistry service...')
+
+@operation
 def prepare_hpc(config,
                 base_dir,
                 workdir_prefix,
