@@ -22,6 +22,10 @@ node_types:
         properties:
             config:
                 description: get host, client, secret and storage
+            skip_cleanup:
+                description: True to not clean all files at deployment removal
+                type: boolean
+                default: False
             simulate:
                 description: Set to true to simulate job without sending it
                 type: boolean
