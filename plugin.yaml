@@ -8,7 +8,7 @@ plugins:
         # URL to archive containing the plugin or name of directory containing
         # the plugin if it is included in the the blueprint directory under the
         # "plugins" directory.
-        source: https://github.com/Trophime/cloudify-hpc-plugin/archive/add_checks.zip
+        source: https://github.com/Trophime/cloudify-hpc-plugin/archive/add_singularity.zip
         package_name: cloudify-hpc-plugin
         package_version: '1.3.1'
 
@@ -20,14 +20,16 @@ node_types:
     sregistry.nodes.Compute:
         derived_from: cloudify.nodes.Compute
         properties:
-            host:
-                description: FQDN hostname or host ip
-            client:
-                description: type of the client (registry,...)
-            secret:
-                description: secret API Token
-            storage:
-                description: default storage directory path on hpc ressources
+            config:
+                description: get host, client, secret and storage
+            # host:
+            #     description: FQDN hostname or host ip
+            # client:
+            #     description: type of the client (registry,...)
+            # secret:
+            #     description: secret API Token
+            # storage:
+            #     description: default storage directory path on hpc ressources
             simulate:
                 description: Set to true to simulate job without sending it
                 type: boolean
@@ -40,27 +42,14 @@ node_types:
                 start:
                     implementation: hpc.hpc_plugin.tasks.prepare_sregistry
                     inputs:
-                        host:
-                            default: { get_property: [SELF, host] }
-                        client:
-                            default: { get_property: [SELF, client] }
-                        secret:
-                            default: { get_property: [SELF, secret] }
-                        storage:
-                            default: { get_property: [SELF, storage] }
+                        config:
+                            default: { get_property: [SELF, config] }
                         simulate:
                             default: { get_property: [SELF, simulate] }
                 stop:
                     implementation: hpc.hpc_plugin.tasks.cleanup_sregistry
                     inputs:
-                        host:
-                            default: { get_property: [SELF, host] }
-                        client:
-                            default: { get_property: [SELF, client] }
-                        secret:
-                            default: { get_property: [SELF, secret] }
-                        storage:
-                            default: { get_property: [SELF, storage] }
+                        config:
                             default: { get_property: [SELF, config] }
                         simulate:
                             default: { get_property: [SELF, simulate] }
