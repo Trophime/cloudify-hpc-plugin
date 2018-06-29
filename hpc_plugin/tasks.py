@@ -67,12 +67,12 @@ def prepare_sregistry(config,
 
     if not simulate:
         wm_type = config['client']
-        wm = SregistryClient.factory(wm_type)
-        if not wm:
-            raise NonRecoverableError(
-                "Sregistry client '" +
-                wm_type +
-                "' not supported.")
+        # wm = SregistryClient.factory(wm_type)
+        # if not wm:
+        #     raise NonRecoverableError(
+        #         "Sregistry client '" +
+        #         wm_type +
+        #         "' not supported.")
 
 
 @operation

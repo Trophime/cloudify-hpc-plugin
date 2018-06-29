@@ -22,14 +22,6 @@ node_types:
         properties:
             config:
                 description: get host, client, secret and storage
-            # host:
-            #     description: FQDN hostname or host ip
-            # client:
-            #     description: type of the client (registry,...)
-            # secret:
-            #     description: secret API Token
-            # storage:
-            #     description: default storage directory path on hpc ressources
             simulate:
                 description: Set to true to simulate job without sending it
                 type: boolean
