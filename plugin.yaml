@@ -31,8 +31,26 @@ node_types:
                     install_method: none
         interfaces:
             cloudify.interfaces.lifecycle:
-                create:
-                    implementation: sregistry_param.py
+                start:
+                    implementation: hpc.hpc_plugin.tasks.prepare_hpc
+                    inputs:
+                        config:
+                            default: { get_property: [SELF, config] }
+                        base_dir:
+                            default: ""
+                        workdir_prefix:
+                            default: ""
+                        simulate:
+                            default: { get_property: [SELF, simulate] }
+                stop:
+                    implementation: hpc.hpc_plugin.tasks.cleanup_hpc
+                    inputs:
+                        config:
+                            default: { get_property: [SELF, config] }
+                        skip:
+                            default: { get_property: [SELF, skip_cleanup] }
+                        simulate:
+                            default: { get_property: [SELF, simulate] }
 
     hpc.nodes.Compute:
         derived_from: cloudify.nodes.Compute
