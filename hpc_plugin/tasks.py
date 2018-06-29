@@ -57,22 +57,13 @@ def preconfigure_job(config,
 
 
 @operation
-def prepare_sregistry(config,
+def create_sregistry(config,
                 simulate,
                 **kwargs):  # pylint: disable=W0613
     """ Tries to connect to a sregistry node """
     ctx.logger.info('Connecting to sregistry node..')
     for key, value in config.iteritems():
         ctx.logger.info('sregistry: config[%s]=%s' % (key, value) )
-
-    if not simulate:
-        wm_type = config['client']
-        # wm = SregistryClient.factory(wm_type)
-        # if not wm:
-        #     raise NonRecoverableError(
-        #         "Sregistry client '" +
-        #         wm_type +
-        #         "' not supported.")
 
 
 @operation
