@@ -256,7 +256,8 @@ def bootstrap_job(deployment,
         return
 
     ctx.logger.info('Bootstraping job..')
-    simulate = ctx.instance.runtime_properties['simulate']
+    if 'simulate' in ctx.instance.runtime_properties:
+        simulate = ctx.instance.runtime_properties['simulate']
 
     if not simulate and 'bootstrap' in deployment:
         ctx.logger.info('Loading deployment inputs..')
