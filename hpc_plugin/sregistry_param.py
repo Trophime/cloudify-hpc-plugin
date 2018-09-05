@@ -21,3 +21,5 @@ ctx.logger.info("sregistry: config = {}".format(props["config"]))
 # for key, value in config.iteritems():
 #     ctx.logger.info('sregistry: config[%s]=%s' % (key, value) )
  
+for key, value in props['config'].iteritems():
+    ctx.instance.runtime_properties[key] = value

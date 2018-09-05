@@ -63,6 +63,13 @@ def prepare_sregistry(config,
     """ Tries to check sregistry service"""
     ctx.logger.info('checking sregistry service..')
     
+    for key, value in props['config'].iteritems():
+        ctx.instance.runtime_properties[key] = value
+
+    # add properties depending on the type of clients ( see sregistry-cli docs)
+    # if 'client' in config and config['client']:
+        
+    
 @operation
 def cleanup_sregistry(config, simulate, **kwargs):  # pylint: disable=W0613
     """ Tries to connect to a login node """
